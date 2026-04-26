@@ -2,8 +2,6 @@
 
 An end-to-end deep learning framework for real-time traffic violation detection and automatic license plate recognition (ALPR), built with **YOLOv8** and **Keras-OCR**, with automated **e-Challan generation** via email and SMS.
 
----
-
 ## Table of Contents
 
 - [Overview](#overview)
@@ -22,7 +20,7 @@ An end-to-end deep learning framework for real-time traffic violation detection 
 - [Future Work](#future-work)
 - [Authors](#authors)
 
----
+
 
 ## Overview
 
@@ -36,7 +34,7 @@ This system automates traffic violation monitoring using five independently trai
 
 The system achieved an average **mAP@50 of 97.9%**, with **precision 96.9%** and **recall 95.9%**, outperforming existing state-of-the-art models on the same tasks.
 
----
+
 
 ## Features
 
@@ -53,7 +51,7 @@ The system achieved an average **mAP@50 of 97.9%**, with **precision 96.9%** and
 |Database Storage | Persists all violation records in Supabase |
 |Real-time Processing | ~120 FPS inference on NVIDIA Tesla T4 |
 
----
+
 
 ## System Architecture
 
@@ -97,7 +95,7 @@ Real-Time Video Feed / Image Input
  Email (SMTP)   SMS (Twilio)
 ```
 
----
+
 
 ## Project Structure
 
@@ -160,7 +158,7 @@ traffic-violation-detection/
     └── paper.pdf                       # Research paper (MajP-Traffic.pdf)
 ```
 
----
+
 
 ## Datasets
 
@@ -178,7 +176,7 @@ The system uses 7 datasets across 5 violation types. **None of these are include
 
 All datasets use an **80:10:10 train/val/test split**.
 
----
+
 
 ## Model Weights
 
@@ -193,7 +191,7 @@ The trained `.pt` weight files are **not committed to Git** due to file size (~1
 
 After downloading, extract and place `.pt` files into the `models/` directory.
 
----
+
 
 ## Installation
 ### 1. Clone the repository
@@ -228,7 +226,7 @@ requests
 
 Place all `.pt` files inside the `models/` directory. See [Model Weights](#model-weights) above.
 
----
+
 
 ## Configuration
 
@@ -276,7 +274,7 @@ TWILIO_ACCOUNT_SID = "<your-account-sid>"
 TWILIO_AUTH_TOKEN  = "<your-auth-token>"
 TWILIO_NUMBER      = "+1XXXXXXXXXX"
 ```
----
+
 
 ## Usage
 
@@ -302,7 +300,7 @@ python src/main.py --input webcam         # Live webcam
 python src/main.py --input image.jpg      # Single image
 python src/main.py --input video.mp4      # Video file
 ```
----
+
 
 ## Results & Performance
 
@@ -346,7 +344,7 @@ python src/main.py --input video.mp4      # Video file
 | YOLOv8s (small) | 0.990 | Best bounding box precision |
 | YOLOv8l (large) | 0.989 | Highest compute cost |
 
----
+
 
 ## Database Schema
 
@@ -379,7 +377,7 @@ Two tables in Supabase (PostgreSQL):
 | `fine` | INTEGER | Fine amount in INR |
 | `challan_sent` | BOOLEAN | Whether challan has been dispatched |
 
----
+
 
 ## Challan & Notification Pipeline
 
@@ -396,7 +394,7 @@ Fines are defined as:
 | Using Mobile Phone | ₹500 |
 | Triple Riding | ₹1,500 |
 
----
+
 
 ## Limitations
 
@@ -406,7 +404,7 @@ Fines are defined as:
 - RegCheck API may not return owner data for all Indian plates (fallback to mock data used in dev)
 - End-to-end latency (~12s/incident) may be too high for very high-throughput intersections
 
----
+
 
 ## Future Work
 
@@ -417,7 +415,7 @@ Fines are defined as:
 - Integration with official transport authority APIs (Vahan/Parivahan)
 - Multimodal fusion and adaptive thresholding for adverse weather
 
----
+
 
 ## Authors
 
@@ -429,13 +427,13 @@ Fines are defined as:
 | Dr. P. Janarthanan | Sri Venkateswara College of Engineering, Sriperumbudur |
 | Dr. A. Kavitha | Dwaraka Doss Govardhan Doss Vaishnav College, Chennai |
 
----
+
 
 ## License
 
 This project is for academic and research purposes. Please cite the associated paper if you use this work.
 
----
+
 
 ## Citation
 
