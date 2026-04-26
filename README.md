@@ -410,12 +410,12 @@ Fines are defined as:
 
 ## Future Work
 
-- [ ] Super-resolution preprocessing to improve OCR on low-quality plates
-- [ ] Temporal video analysis for signal-jumping and wrong-lane detection
-- [ ] Real-time analytics dashboard for law enforcement
-- [ ] Edge deployment (Jetson Nano / Raspberry Pi) for on-camera inference
-- [ ] Integration with official transport authority APIs (Vahan/Parivahan)
-- [ ] Multimodal fusion and adaptive thresholding for adverse weather
+- Super-resolution preprocessing to improve OCR on low-quality plates
+- Temporal video analysis for signal-jumping and wrong-lane detection
+- Real-time analytics dashboard for law enforcement
+- Edge deployment (Jetson Nano / Raspberry Pi) for on-camera inference
+- Integration with official transport authority APIs (Vahan/Parivahan)
+- Multimodal fusion and adaptive thresholding for adverse weather
 
 ---
 
