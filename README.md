@@ -9,10 +9,6 @@ An end-to-end deep learning framework for real-time traffic violation detection 
 - [System Architecture](#system-architecture)
 - [Project Structure](#project-structure)
 - [Datasets](#datasets)
-- [Model Weights](#model-weights)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
 - [Results & Performance](#results--performance)
 - [Database Schema](#database-schema)
 - [Challan & Notification Pipeline](#challan--notification-pipeline)
@@ -104,17 +100,9 @@ Real-Time Video Feed / Image Input
 traffic-violation-detection/
 │
 ├── README.md
-├── .gitignore
 ├── requirements.txt
 │
-├── notebooks/                          # Jupyter notebooks (development & experimentation)
-│   ├── road_safety_system_final.ipynb  # Main end-to-end pipeline notebook
-│   ├── api_and_db.ipynb                # API integration + Supabase DB notebook
-│   ├── video_with_crop.ipynb           # Video feed inference with plate cropping
-│   └── final/
-│       └── final-1-0.ipynb             # Final consolidated training notebook
-│
-├── models/                             # YOLOv8 model weight files (*.pt)
+├── Weights/                             # YOLOv8 model weight files (*.pt)
 │   ├── yolov8n.pt                      # Base YOLOv8 nano (vehicle detection backbone)
 │   ├── helmet.pt                       # Helmet violation detection model
 │   ├── triple.pt                       # Triple riding detection model
@@ -122,41 +110,7 @@ traffic-violation-detection/
 │   ├── phone.pt                        # Mobile phone usage detection model
 │   └── license_plate.pt               # License plate localization model
 │
-├── datasets/                           # Dataset references and download scripts
-│   ├── README_datasets.md              # Instructions to download each dataset
-│   └── augmentation_config.yaml        # Augmentation settings used during training
-│
-├── src/                                # Modular Python source (refactored from notebooks)
-│   ├── __init__.py
-│   ├── config.py                       # Centralized config (paths, thresholds, keys)
-│   ├── detection/
-│   │   ├── __init__.py
-│   │   ├── violation_detector.py       # Runs all 5 YOLOv8 models in parallel
-│   │   ├── plate_detector.py           # License plate localization (YOLOv8)
-│   │   └── ocr_reader.py               # Keras-OCR text extraction + post-processing
-│   ├── database/
-│   │   ├── __init__.py
-│   │   └── supabase_client.py          # Supabase insert/query helpers
-│   ├── notifications/
-│   │   ├── __init__.py
-│   │   ├── email_sender.py             # SMTP email with challan PDF attachment
-│   │   └── sms_sender.py               # Twilio SMS dispatcher
-│   ├── challan/
-│   │   ├── __init__.py
-│   │   └── challan_generator.py        # PDF e-Challan generation with fpdf2
-│   └── api/
-│       ├── __init__.py
-│       └── regcheck_client.py          # RegCheck SOAP API for vehicle owner lookup
-│
-├── outputs/                            # Generated challans and violation snapshots
-│   ├── challans/                       # PDF challan files (gitignored — generated at runtime)
-│   └── snapshots/                      # Cropped violation frames (gitignored)
-│
-├── assets/
-│   └── sample_images/                  # Sample test images for demo purposes
-│
-└── docs/
-    └── paper.pdf                       # Research paper (MajP-Traffic.pdf)
+├──Sample-challan-generated.pdf
 ```
 
 
@@ -176,132 +130,6 @@ The system uses 7 datasets across 5 violation types. **None of these are include
 | Indian License Plates with Labels | License Plate (OCR) | Kaggle | Not disclosed |
 
 All datasets use an **80:10:10 train/val/test split**.
-
-
-
-## Model Weights
-
-The trained `.pt` weight files are **not committed to Git** due to file size (~17MB+ each). They are distributed separately.
-
-**Option 1 — Download from shared storage:**
-> *(Add your Google Drive / HuggingFace / release link here)*
-
-**Option 2 — Use the zipped weights included in the repo release:**
-- `best weights.zip` — contains weights for all violation models
-- `Best.pt.zip` — final consolidated best weight
-
-After downloading, extract and place `.pt` files into the `models/` directory.
-
-
-
-## Installation
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/<your-username>/traffic-violation-detection.git
-cd traffic-violation-detection
-```
-
-### 2. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### `requirements.txt` contents:
-
-```
-ultralytics>=8.0.0
-keras-ocr
-opencv-python
-numpy
-matplotlib
-scikit-learn
-supabase
-fpdf2
-twilio
-requests
-```
-
-### 3. Download model weights
-
-Place all `.pt` files inside the `models/` directory. See [Model Weights](#model-weights) above.
-
-
-
-## Configuration
-
-Copy and edit the config file before running:
-
-```bash
-cp src/config.example.py src/config.py
-```
-
-Edit `src/config.py`:
-
-```python
-# --- Model Paths ---
-VEHICLE_MODEL_PATH   = "models/yolov8n.pt"
-HELMET_MODEL_PATH    = "models/helmet.pt"
-TRIPLE_MODEL_PATH    = "models/triple.pt"
-SEATBELT_MODEL_PATH  = "models/seatbelt.pt"
-PHONE_MODEL_PATH     = "models/phone.pt"
-PLATE_MODEL_PATH     = "models/license_plate.pt"
-
-# --- Detection Thresholds ---
-CONFIDENCE_THRESHOLD = 0.6
-
-# --- Violation Fines (INR) ---
-VIOLATION_FINES = {
-    "No Helmet": 1000,
-    "No Seatbelt": 1000,
-    "Using Mobile Phone": 500,
-    "Triple Riding": 1500,
-}
-
-# --- Supabase ---
-SUPABASE_URL = "https://<your-project>.supabase.co"
-SUPABASE_KEY = "<your-anon-key>"
-
-# --- RegCheck API ---
-REGCHECK_USERNAME = "<your-username>"
-
-# --- Email (SMTP) ---
-SENDER_EMAIL    = "<your-gmail>"
-SENDER_PASSWORD = "<your-app-password>"   # Use Gmail App Password, not account password
-
-# --- Twilio SMS ---
-TWILIO_ACCOUNT_SID = "<your-account-sid>"
-TWILIO_AUTH_TOKEN  = "<your-auth-token>"
-TWILIO_NUMBER      = "+1XXXXXXXXXX"
-```
-
-
-## Usage
-
-### Run on a single image
-
-Open and run `notebooks/road_safety_system_final.ipynb` — set `image_path` to your image file.
-
-### Run on a live webcam feed
-
-Open and run `notebooks/video_with_crop.ipynb`.
-
-### Generate challans for all stored violations
-
-Run the challan generation cell in `notebooks/api_and_db.ipynb`, which:
-- Fetches all unprocessed violations from Supabase
-- Generates a PDF challan per vehicle
-- Emails and SMSes the owner
-
-### Full pipeline (refactored src — coming soon)
-
-```bash
-python src/main.py --input webcam         # Live webcam
-python src/main.py --input image.jpg      # Single image
-python src/main.py --input video.mp4      # Video file
-```
-
 
 ## Results & Performance
 
