@@ -18,6 +18,7 @@ An end-to-end deep learning framework for real-time traffic violation detection 
 - [Challan & Notification Pipeline](#challan--notification-pipeline)
 - [Limitations](#limitations)
 - [Future Work](#future-work)
+- [Publication](#publication)
 - [Authors](#authors)
 
 
@@ -416,6 +417,10 @@ Fines are defined as:
 - Multimodal fusion and adaptive thresholding for adverse weather
 
 
+## Publication
+This project is published as a research paper: "Towards Safer Roads: An End-to-End Deep Learning Framework for Traffic Violation Detection and License Plate Recognition" DOI: 10.1177/18758967251397468
+
+[Paper](https://doi.org/10.1177/18758967251397468)
 
 ## Authors
 
@@ -426,22 +431,3 @@ Fines are defined as:
 | Archana G | Sri Venkateswara College of Engineering |
 | Dr. P. Janarthanan | Sri Venkateswara College of Engineering, Sriperumbudur |
 | Dr. A. Kavitha | Dwaraka Doss Govardhan Doss Vaishnav College, Chennai |
-
-
-
-## License
-
-This project is for academic and research purposes. Please cite the associated paper if you use this work.
-
-
-
-## Citation
-
-```
-@article{kavitha2025trafficsafety,
-  title={Towards Safer Roads: An End-to-End Deep Learning Framework for Traffic Violation Detection and License Plate Recognition},
-  author={Kavitha, A. and Janarthanan, P. and Archana, G. and Sanjana, J. and Sri Janani, S.},
-  institution={Sri Venkateswara College of Engineering, Sriperumbudur},
-  year={2025}
-}
-```
